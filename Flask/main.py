@@ -1,10 +1,33 @@
 from datetime import datetime, date, time
-
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template
+from wtforms import StringField, TextAreaField, SubmitField
+from wtforms.validators import DataRequired, Length
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'SECRET_KEY'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3
+db = SQLAlchemy(app)
 data = [[1 ,2], [3, 4], [5, 6], [7, 8], [9, 10]]
+
+
+Class News(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), unique=True, nullable=False)
+    text = db.Column(db.String(255), nullable=False)
+    created_date = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    
+db.create_all()
+
+Class NewsForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired(message="message is to be not empty")])
+
+
+Class FeedbackForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired(message="message is to be not empty")])
+
 @app.route('/cookie/')
 def cookie():
     res = make_response("Setting a cookie")
@@ -59,3 +82,4 @@ def time_page():
 
 if __name__ == '__main__':
     app.run()
+# проекты:(базы,  парсинг, данных тесты,) слежка за ценами, парсинг афиши, прежде чем задавать вопрос задать его гуглу
